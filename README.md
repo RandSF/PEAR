@@ -36,11 +36,11 @@
 ## 📰 News
 **[2026.02.02]** Paper release of our PEAR on arXiv!
 
-**[2026.02.02]** The inference code and the **first version of the PEAR model** have been released!  Try it — the model will be downloaded automatically.
+**[2026.02.02]** The inference code and the **the PEAR model** have been released!  Try it — the model will be downloaded automatically.
 
 **[2026.02.11]** Training code released.
 
-**[TODO]** Training dastasets and **final version of the PEAR model(more accurate in body pose prediction as shown in our paper and project page)**.
+**[TODO]** Training dastasets.
 
 
 ## 💡 Overview
