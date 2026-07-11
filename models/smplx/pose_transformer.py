@@ -9,7 +9,6 @@ from torch import nn
 from .t_cond_mlp import normalization_layer, AdaptiveLayerNorm1D
 from .t_cond_mlp import FrequencyEmbedder
 # from .vit import Attention, FeedForward
-from utils.graphics import overlay_attention_on_image
 
 def exists(val):
     return val is not None
@@ -360,4 +359,3 @@ class TransformerDecoder(nn.Module):
 
         x = self.transformer(x, *args, context=context, context_list=context_list)
         return x
-

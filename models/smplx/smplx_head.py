@@ -104,7 +104,7 @@ class SMPLXTransformerDecoderHead(nn.Module):
     Cross-attention based SKEL Transformer decoder
     """
 
-    def __init__(self, cfg, batch_size):
+    def __init__(self, cfg, batch_size, mean_params_path="assets/SMPLX/smpl_mean_params.npz"):
         super().__init__()
         self.cfg = cfg
 
@@ -159,11 +159,11 @@ class SMPLXTransformerDecoderHead(nn.Module):
         if self.focal_length.ndim == 1:  # (N,)
             self.focal_length = self.focal_length[:, None]  # (N, 1)
         self.focal_length = self.focal_length.expand(batch_size, 2)  # (N, 2)
-        self.set_smpl_init()
+        self.set_smpl_init(mean_params_path)
 
-    def set_smpl_init(self):
+    def set_smpl_init(self, mean_params_path):
         """ Fetch saved SMPL parameters and register buffers."""
-        mean_params = np.load("assets/SMPLX/smpl_mean_params.npz")
+        mean_params = np.load(mean_params_path)
         init_body_pose = torch.eye(3).reshape(1,3,3).repeat(self.nrot,1,1)[:,:,:2].flatten(1).reshape(1, -1)
         init_body_pose[:,:24*6] = torch.from_numpy(mean_params['pose'][:]).float() # global_orient+body_pose from SMPL
 
@@ -317,7 +317,6 @@ class SMPLXTransformerDecoderHead(nn.Module):
         all_out['flame_param'] = flame_param_dict
 
         return all_out
-
 
 
 

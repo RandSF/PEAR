@@ -252,7 +252,7 @@ class SMPLX(nn.Module):
         self.register_buffer('faces_uv_idx',faces_uv_idx)
         if add_teeth: # True
             self.add_teeth()
-            
+
         uvmap_f_idx=get_uvmap_faces_index(self.faces_uv_idx.numpy(),self.texcoords.numpy(),uv_size=uv_size)
         uvmap_f_bary=get_uvmap_faces_barycoord(uvmap_f_idx,self.faces_uv_idx.numpy(),self.texcoords.numpy(),uv_size=uv_size)
         uvmap_mask=(uvmap_f_idx!=-1)
@@ -897,9 +897,9 @@ def get_uvmap_faces_barycoord(uvmap_faces_idx,faces_uv,uv_coords,uv_size=512):
             c_0=c_uv-v_uv0
             c_1=c_uv-v_uv1
             c_2=c_uv-v_uv2
-            area0=0.5*np.abs(np.cross(c_1,c_2))
-            area1=0.5*np.abs(np.cross(c_0,c_2))
-            area2=0.5*np.abs(np.cross(c_0,c_1))
+            area0=0.5*np.abs(c_1[0]*c_2[1]-c_1[1]*c_2[0])
+            area1=0.5*np.abs(c_0[0]*c_2[1]-c_0[1]*c_2[0])
+            area2=0.5*np.abs(c_0[0]*c_1[1]-c_0[1]*c_1[0])
             total_area=area0+area1+area2+1e-6
             uvmap_faces_barycoord[v_idx,u_idx]=np.array([area0,area1,area2])/total_area
             #verify
@@ -943,4 +943,3 @@ class OBJLoader:
                         self.faces.append(face)
         except Exception as e:
             print(f"Error loading OBJ file: {e}")
-            
